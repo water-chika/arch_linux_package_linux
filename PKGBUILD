@@ -1,7 +1,7 @@
 # Maintainer: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
 
 pkgbase=linux-water-chika
-pkgver=6.17.7.arch1
+pkgver='6.17.7.arch1.water'
 pkgrel=1
 pkgdesc='Linux'
 url='https://github.com/archlinux/linux'
@@ -28,7 +28,6 @@ options=(
 _srcname=linux
 _srctag=v${pkgver%.*}-${pkgver##*.}
 source=(
-  $url/releases/download/$_srctag/linux-$_srctag.patch.zst{,.sig}
   config  # the main kernel config file
 )
 validpgpkeys=(
@@ -38,12 +37,8 @@ validpgpkeys=(
 )
 # https://www.kernel.org/pub/linux/kernel/v6.x/sha256sums.asc
 sha256sums=(
-            '8bb8d08a419971c0cf96346de3de69c980e0c9a384f46cca49ca9c74eb60343a'
-            'SKIP'
             '4e6c3f6a35fed3e2bee7309d430ddf87b435ffb6e697c5d53a6c2eb73c42079a')
 b2sums=(
-        '446bbb888e4588285d9629b6142420a308919105612d81cc9add844857c6930caf8fa8477e3120f51a596609f4aba6f166447902fc6936ba8c60870976690db2'
-        'SKIP'
         '7d8b33b9ef36bbd599ad283210d19c8f6a481ac3e540be0ac519c4942865bf8a25f01bfcfba4ff4c6fc237a5d7586eb6bb0fbf3eb657d5df6856bd4395475f78')
 
 export KBUILD_BUILD_HOST=archlinux
@@ -51,9 +46,8 @@ export KBUILD_BUILD_USER=$pkgbase
 export KBUILD_BUILD_TIMESTAMP="$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EPOCH})"
 
 prepare() {
-  git_repo https://github.com/water-chika/linux --worktree $srcdir/linux
+  git_repo https://github.com/water-chika/linux --worktree $srcdir/linux --commit v$pkgver
   cd $_srcname
-  git reset --hard v6.17.7-arch1
 
   echo "Setting version..."
   echo "-$pkgrel" > localversion.10-pkgrel
