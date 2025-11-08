@@ -70,7 +70,7 @@ prepare() {
 
 build() {
   cd $_srcname
-  make all
+  make all -j $(nproc)
   make -C tools/bpf/bpftool vmlinux.h feature-clang-bpf-co-re=1
 }
 
