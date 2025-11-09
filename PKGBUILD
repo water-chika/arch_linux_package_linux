@@ -48,6 +48,7 @@ export KBUILD_BUILD_TIMESTAMP="$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EP
 prepare() {
   git_repo https://github.com/water-chika/linux --worktree $srcdir/linux --commit v$pkgver
   cd $_srcname
+  git reset --hard v$pkgver
 
   echo "Setting version..."
   echo "-$pkgrel" > localversion.10-pkgrel
