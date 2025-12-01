@@ -4,7 +4,7 @@ pkgbase=linux-water-chika
 pkgver='6.17.8.arch1.water'
 pkgrel=1
 pkgdesc='Linux'
-url='https://github.com/archlinux/linux'
+url='https://github.com/water-chika/linux'
 arch=(x86_64)
 license=(GPL-2.0-only)
 makedepends=(
@@ -46,9 +46,8 @@ export KBUILD_BUILD_USER=$pkgbase
 export KBUILD_BUILD_TIMESTAMP="$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EPOCH})"
 
 prepare() {
-  git_repo https://github.com/water-chika/linux --worktree $srcdir/linux --commit v$pkgver
+  git_repo https://github.com/water-chika/linux --worktree $srcdir/linux --commit 0e76265596a09f0252cce190e5229f472cd31590
   cd $_srcname
-  git reset --hard v$pkgver
 
   echo "Setting version..."
   echo "-$pkgrel" > localversion.10-pkgrel
