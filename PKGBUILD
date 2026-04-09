@@ -1,7 +1,7 @@
 # Maintainer: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
 
 pkgbase=linux-water-chika
-pkgver='6.17.8.arch1.water'
+pkgver='6.19.9.arch1.water'
 pkgrel=1
 pkgdesc='Linux'
 url='https://github.com/water-chika/linux'
@@ -27,26 +27,18 @@ options=(
 )
 _srcname=linux
 _srctag=v${pkgver%.*}-${pkgver##*.}
-source=(
-  config  # the main kernel config file
-)
 validpgpkeys=(
   ABAF11C65A2970B130ABE3C479BE3E4300411886  # Linus Torvalds
   647F28654894E3BD457199BE38DBBDC86092693E  # Greg Kroah-Hartman
   83BC8889351B5DEBBB68416EB8AC08600F108CDF  # Jan Alexander Steffens (heftig)
 )
-# https://www.kernel.org/pub/linux/kernel/v6.x/sha256sums.asc
-sha256sums=(
-            '4bf24013d1a837bf6b51dbbfd1a162c59769f8371f2cf919e34b21271697f9c5')
-b2sums=(
-        '1ec4d533d25e9127c61eb09dfcd840c88e34cff2c55bcf6745c926892d275c88a5f810bd8ccf63903b5e33c211d4e814abdb057d5c060096d1a3b65280f2c347')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
 export KBUILD_BUILD_TIMESTAMP="$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EPOCH})"
 
 prepare() {
-  git_repo https://github.com/water-chika/linux --worktree $srcdir/linux --commit 0e76265596a09f0252cce190e5229f472cd31590
+  git_repo https://github.com/water-chika/linux --worktree $srcdir/linux --commit df560cef20d267267b835216a69f6cbe679e0cc1
   cd $_srcname
 
   echo "Setting version..."
@@ -54,7 +46,7 @@ prepare() {
   echo "${pkgbase#linux}" > localversion.20-pkgname
 
   echo "Setting config..."
-  cp ../config .config
+  cp $startdir/config .config
   make olddefconfig
   diff -u ../config .config || :
 
